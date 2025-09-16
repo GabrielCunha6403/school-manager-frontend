@@ -1,16 +1,20 @@
+@import "primeicons/primeicons.css";
+
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    overflow-x: hidden;
 }
 .background-main {
-    background-color: #c6e7ff;
+    background-color: #232328;
     width: 100vw;
     min-height: 100vh;
     display: flex;
     justify-content: center;
 }
 .content-body {
-    background-color: white;
+    background-color: #09090b;
     width: 80vw;
+    min-height: 100vh;
     padding: 32px;
 }

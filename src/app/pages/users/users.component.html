@@ -1,4 +1,36 @@
 <div class="content-body">
-    <app-page-header title="Users"></app-page-header>
-    <p-button label="Click"></p-button>
+    <app-page-header title="Usuários"></app-page-header>
+    <div class="top-area-list">
+        <input type="text" pInputText placeholder="Pesquise o usuário por nome...">
+        <p-button label="Cadastrar novo usuário" icon="pi pi-plus"></p-button>
+    </div>
+    <p-table 
+        #userTable
+        [value]="listUsers" 
+        [paginator]="true"
+        [styleClass]="'p-datatable-sm'"
+        [rows]="5"
+        [globalFilterFields]="['id', 'name', 'tpUser']"
+        >
+        <ng-template #header>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Tipo de usuário</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-user>
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.tpUser }}</td>
+                <td style="text-align: right;">
+                    <p-button icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" />
+                    <p-button icon="pi pi-trash" [rounded]="true" [text]="true" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
