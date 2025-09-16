@@ -1,0 +1,49 @@
+.btn-table-matriz {
+    color: hsl(158, 64%, 52%);
+    padding: 4px 8px;
+    border-radius: 4px;
+    width: -webkit-fill-available;
+    text-align: left;
+    transition: .1s;
+    &:hover {
+        background-color: #34d399;
+        color: #09090b;
+    }
+}
+
+.table-semestre-area {
+    overflow-y: auto;
+    height: 17rem;
+    scrollbar-width: none;
+}
+
+.btn-add-semester {
+    background-color: #18181b;
+    border: 1px dashed #3f3f46;
+    border-radius: 6px;
+    color: #34d399;
+    font-weight: 600;
+    font-size: 1.125rem;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+        background-color: #34d399;
+        color: #18181b;
+    }
+    i {
+        font-size: 2.5rem;
+    }
+} 
+
+.btn-add-disciplina {
+    color: hsl(158, 64%, 52%);
+    padding: 4px 8px;
+    border-radius: 4px;
+    width: -webkit-fill-available;
+    transition: 0.1s;
+    text-align: left;
+    &:hover {
+        background-color: #34d399;
+        color: #18181b;
+    }
+}

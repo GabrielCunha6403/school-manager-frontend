@@ -1,0 +1,82 @@
+<div class="content-body sm:w-[80vw]">
+    <app-page-header title="Matriz curricular"></app-page-header>
+    <p-button pButton 
+        [severity]="isEditEnabled ? 'primary' : 'secondary'" 
+        [icon]="isEditEnabled ? 'pi pi-check' : 'pi pi-pencil'" 
+        [label]="isEditEnabled ? 'Salvar edição' : 'Habilitar edição de Matriz curricular'" 
+        (click)="changeEditState()"
+        type="button" />
+    <div class="mt-4">
+        <div class="flex gap-3 flex-wrap justify-center lg:justify-start">
+            @for (semestre of listSemestres; track $index) {
+                <p-panel class="flex-1 min-w-[16rem] md:w-72 mb-3 flex flex-col">
+                    <ng-template pTemplate="header">
+                        <div class="flex w-full items-center gap-2 justify-between">
+                            <span class="font-bold">{{ ($index + 1) + 'º Semestre' }}</span>
+                            @if (isEditEnabled && $index + 1 === listSemestres.length) {
+                                <p-button 
+                                    class="h-[24px]"
+                                    size="small"
+                                    pTooltip="Excluir semestre" 
+                                    tooltipPosition="top" 
+                                    icon="pi pi-times" 
+                                    [rounded]="true" 
+                                    severity="danger"
+                                    (click)="deleteSemestre($index)" />
+                            }
+                        </div>
+                    </ng-template>
+                    <div class="table-semestre-area">
+                        @if (isEditEnabled) {
+                            <button class="btn-add-disciplina">
+                                <i class="pi pi-plus mr-4"></i>
+                                <span class="mt-2 font-bold">Adicionar disciplina</span>
+                            </button>
+                        }
+                        <p-table  
+                            [value]="semestre.disciplinas" 
+                            [styleClass]="'p-datatable-sm border-0'"
+                            >
+                            <ng-template #body let-disciplina>
+                                <tr>
+                                    <td style="padding: .5rem 0;">
+                                        @if (isEditEnabled) {
+                                            <div class="flex justify-between">
+                                                <span class="text-gray-500">
+                                                    {{disciplina.cdDisciplina}} - {{disciplina.nmDisciplina}}
+                                                </span>
+                                                @if (semestre.disciplinas.length > 1 || $index + 1 === listSemestres.length) {
+                                                    <p-button 
+                                                        pTooltip="Excluir disciplina" 
+                                                        tooltipPosition="top" 
+                                                        icon="pi pi-times" 
+                                                        [rounded]="true" 
+                                                        [text]="true" 
+                                                        severity="danger"
+                                                        (click)="deleteDisciplina($index, disciplina.cdDisciplina)" />
+                                                }
+                                            </div>
+                                        } @else {
+                                            <button class="btn-table-matriz">
+                                                    {{disciplina.cdDisciplina}} - {{disciplina.nmDisciplina}}
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-panel>
+            }
+            @if (isEditEnabled) {
+                <button class="flex-1 min-w-[16rem] md:w-72 mb-3 flex flex-col h-[351.6px] btn-add-semester">
+                    <i class="pi pi-plus"></i>
+                    <span class="mt-2 font-bold">Adicionar semestre</span>
+                </button>
+            }
+        </div>
+    </div>
+    <div class="mt-4">
+        <p-button pButton severity="secondary" label="Voltar" type="button" routerLink="/cursos"></p-button>
+    </div>
+</div>
