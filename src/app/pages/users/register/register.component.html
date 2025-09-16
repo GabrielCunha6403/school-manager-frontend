@@ -1,0 +1,19 @@
+<div class="content-body sm:w-[80vw]">
+    <app-page-header title="Cadastro de Usuário"></app-page-header>
+    <div class="w-full max-w-md mx-auto mt-16 grid">
+        <form>
+            <span>Nome</span>
+            <input type="text" pInputText class="w-full mb-4" placeholder="Digite o nome do usuário">
+            <span>Tipo de usuário</span>
+            <p-select [options]="listTypeUser" optionLabel="name" placeholder="Selecione" class="w-full mb-4" />
+            <div class="col-12 p-fluid">
+                <span>CPF</span>
+                <p-inputmask mask="999.999.999-99" class="w-full flex" placeholder="Ex.: 999.999.999-99" />
+            </div>
+            <div class="flex flex-col justify-end mt-4 sm:flex-row gap-2">
+                <p-button label="Cancelar" class="w-full flex sm:w-auto" routerLink="/users" severity="secondary"></p-button>
+                <p-button label="Salvar" class="w-full flex sm:w-auto" routerLink="/users"></p-button>
+            </div>
+        </form>
+    </div>
+</div>

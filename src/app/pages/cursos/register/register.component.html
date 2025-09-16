@@ -1,0 +1,15 @@
+<div class="content-body sm:w-[80vw]">
+    <app-page-header title="Cadastro de Curso"></app-page-header>
+    <div class="w-full max-w-md mx-auto mt-16 grid">
+        <form>
+            <span>Nome</span>
+            <input type="text" pInputText class="w-full mb-4" placeholder="Digite o nome do usuário">
+            <span>Carga horária</span>
+            <p-inputnumber inputId="integeronly" class="w-full" placeholder="Digite carga horária do curso" />
+            <div class="flex flex-col justify-end mt-4 sm:flex-row gap-2">
+                <p-button label="Cancelar" class="w-full flex sm:w-auto" routerLink="/cursos" severity="secondary"></p-button>
+                <p-button label="Salvar" class="w-full flex sm:w-auto" routerLink="/cursos"></p-button>
+            </div>
+        </form>
+    </div>
+</div>
