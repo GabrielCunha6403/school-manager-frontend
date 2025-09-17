@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterOutlet } from "@angular/router";
 import { Tooltip } from 'primeng/tooltip';
 
 @Component({
@@ -17,12 +17,14 @@ import { Tooltip } from 'primeng/tooltip';
     TableModule,
     DialogModule,
     Tooltip,
-    RouterLink
+    RouterLink,
+    RouterOutlet
 ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
 export class UsersComponent {
+  @ViewChild('userTable') userTable!: Table;
   listUsers = [
     { id: 1, name: 'John Doe', tpUser: 'ADMINISTRADOR', cpf: '123.456.789-00' },
     { id: 2, name: 'Jane Smith', tpUser: 'PROFESSOR', cpf: '234.567.890-11' },
@@ -36,4 +38,9 @@ export class UsersComponent {
     { id: 10, name: 'Ivy Anderson', tpUser: 'ALUNO', cpf: '012.345.678-99' }
   ];
   viewModalConfirmDelete = false;
+
+  applyFilter(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.userTable.filterGlobal(input.value, 'contains');
+  }
 }

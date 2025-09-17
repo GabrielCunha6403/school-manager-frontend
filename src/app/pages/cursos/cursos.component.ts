@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { Tooltip } from 'primeng/tooltip';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
@@ -24,6 +24,7 @@ import { RouterLink, ActivatedRoute, RouterOutlet } from "@angular/router";
   styleUrl: './cursos.component.scss'
 })
 export class CursosComponent {
+  @ViewChild('cursoTable') cursoTable!: Table;
   viewModalConfirmDelete = false;
 
   cursos = [
@@ -38,4 +39,9 @@ export class CursosComponent {
     { id: 9, nome: "Arquitetura e Urbanismo", cargaHoraria: 3600 },
     { id: 10, nome: "Psicologia", cargaHoraria: 4000 },
   ];
+  
+  applyFilter(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.cursoTable.filterGlobal(input.value, 'contains');
+  }
 }

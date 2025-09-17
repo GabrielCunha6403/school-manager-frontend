@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { Tooltip } from 'primeng/tooltip';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
@@ -24,6 +24,7 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from "@angular/router";
   styleUrl: './disciplinas.component.scss'
 })
 export class DisciplinasComponent {
+  @ViewChild('disciplinaTable') disciplinaTable!: Table;
   cdCurso: string | null = null;
   viewModalConfirmDelete = false;
   
@@ -42,5 +43,10 @@ export class DisciplinasComponent {
   
   constructor(private route: ActivatedRoute) {
     this.cdCurso = this.route.snapshot.paramMap.get('cdCurso');
+  }
+  
+  applyFilter(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.disciplinaTable.filterGlobal(input.value, 'contains');
   }
 }

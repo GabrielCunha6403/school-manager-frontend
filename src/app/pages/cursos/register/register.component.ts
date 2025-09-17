@@ -43,8 +43,4 @@ export class RegisterComponent {
     { name: 'Juliana Ribeiro', code: '10' }
   ];
   
-
-  coisa() {
-    this.cursoForm.valid
-  }
 }

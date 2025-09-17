@@ -3,7 +3,13 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: 'users',
-        loadComponent: () => import('./pages/users/users.component').then(m => m.UsersComponent)
+        loadComponent: () => import('./pages/users/users.component').then(m => m.UsersComponent),
+        children: [
+            {
+                path: ':cdUser/detail',
+                loadComponent: () => import('./pages/users/detail/detail.component').then(m => m.DetailComponent),
+            }
+        ]
     },
     {
         path: 'users/register',

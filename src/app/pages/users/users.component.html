@@ -1,7 +1,7 @@
 <div class="content-body sm:w-[80vw]">
     <app-page-header title="Usuários"></app-page-header>
     <div class="top-area-list">
-        <input type="text" pInputText placeholder="Pesquise o usuário por nome...">
+        <input type="text" pInputText (input)="applyFilter($event)" placeholder="Pesquise o usuário por nome...">
         <p-button label="Cadastrar novo usuário" routerLink="/users/register" icon="pi pi-plus"></p-button>
     </div>
     <p-table 
@@ -28,7 +28,7 @@
                 <td>{{ user.tpUser }}</td>
                 <td>{{ user.cpf }}</td>
                 <td style="text-align: right;">
-                    <p-button pTooltip="Visualizar" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Visualizar" [routerLink]="['./' + user.id + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="viewModalConfirmDelete = true" />
                 </td>
@@ -45,3 +45,4 @@
         <p-button label="Confirmar" severity="danger" (click)="viewModalConfirmDelete = false" />
     </div>
 </p-dialog>
+<router-outlet></router-outlet>

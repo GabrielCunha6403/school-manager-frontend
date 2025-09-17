@@ -1,16 +1,16 @@
 <div class="content-body sm:w-[80vw]">
     <app-page-header title="Disciplinas"></app-page-header>
     <div class="top-area-list">
-        <input type="text" pInputText placeholder="Pesquise a disciplina por nome...">
+        <input type="text" pInputText (input)="applyFilter($event)" placeholder="Pesquise a disciplina por nome...">
         <p-button label="Cadastrar nova disciplina" [routerLink]="['./register']" icon="pi pi-plus"></p-button>
     </div>
     <p-table 
-        #userTable
+        #disciplinaTable
         [value]="disciplinasComputacao" 
         [paginator]="true"
         [styleClass]="'p-datatable-sm'"
         [rows]="5"
-        [globalFilterFields]="['id', 'nome', 'cargaHoraria']"
+        [globalFilterFields]="['id', 'nome', 'professor']"
         >
         <ng-template #header>
             <tr>
