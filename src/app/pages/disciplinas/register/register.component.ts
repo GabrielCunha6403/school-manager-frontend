@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PageHeaderComponent } from '../../../util/page-header/page-header.component';
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';

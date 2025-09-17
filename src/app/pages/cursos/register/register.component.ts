@@ -1,18 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PageHeaderComponent } from '../../../util/page-header/page-header.component';
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputMaskModule } from 'primeng/inputmask';
 import { RouterLink } from "@angular/router";
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
+import { Curso } from '../../../models/curso';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
     PageHeaderComponent,
+    ReactiveFormsModule,
     Button,
     InputText,
     InputNumber,
@@ -25,6 +27,9 @@ import { InputNumber } from 'primeng/inputnumber';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
+  private curso = inject(Curso);
+  cursoForm: FormGroup = this.curso.getCursoForm();
+  
   listCoordenadores = [
     { name: 'João Silva', code: '1' },
     { name: 'Maria Souza', code: '2' },
@@ -37,4 +42,9 @@ export class RegisterComponent {
     { name: 'Rafael Gomes', code: '9' },
     { name: 'Juliana Ribeiro', code: '10' }
   ];
+  
+
+  coisa() {
+    this.cursoForm.valid
+  }
 }
