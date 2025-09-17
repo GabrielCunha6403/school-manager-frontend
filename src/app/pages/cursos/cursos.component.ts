@@ -5,7 +5,7 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { Tooltip } from 'primeng/tooltip';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
-import { RouterLink, ActivatedRoute } from "@angular/router";
+import { RouterLink, ActivatedRoute, RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-cursos',
@@ -17,7 +17,8 @@ import { RouterLink, ActivatedRoute } from "@angular/router";
     TableModule,
     DialogModule,
     Tooltip,
-    RouterLink
+    RouterLink,
+    RouterOutlet
 ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.scss'

@@ -12,6 +12,12 @@ export const routes: Routes = [
     {
         path: 'cursos',
         loadComponent: () => import('./pages/cursos/cursos.component').then(m => m.CursosComponent),
+        children: [
+            {
+                path: ':cdCurso/detail',
+                loadComponent: () => import('./pages/cursos/detail/detail.component').then(m => m.DetailComponent),
+            }
+        ]
     },
     {
         path: 'cursos/register',
@@ -19,7 +25,13 @@ export const routes: Routes = [
     },
     {
         path: 'cursos/:cdCurso/disciplinas',
-        loadComponent: () => import('./pages/disciplinas/disciplinas.component').then(m => m.DisciplinasComponent)
+        loadComponent: () => import('./pages/disciplinas/disciplinas.component').then(m => m.DisciplinasComponent),
+        children: [
+            {
+                path: ':cdDisciplina/detail',
+                loadComponent: () => import('./pages/disciplinas/detail/detail.component').then(m => m.DetailComponent),
+            }
+        ]
     },
     {
         path: 'cursos/:cdCurso/disciplinas/register',

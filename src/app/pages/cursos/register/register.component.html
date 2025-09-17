@@ -3,7 +3,9 @@
     <div class="w-full max-w-md mx-auto mt-16 grid">
         <form>
             <span>Nome</span>
-            <input type="text" pInputText class="w-full mb-4" placeholder="Digite o nome do usuário">
+            <input type="text" pInputText class="w-full mb-4" placeholder="Digite o nome do curso">
+            <span>Coordenador</span>
+            <p-select [options]="listCoordenadores" optionLabel="name" placeholder="Selecione" class="w-full mb-4" />
             <span>Carga horária</span>
             <p-inputnumber inputId="integeronly" class="w-full" placeholder="Digite carga horária do curso" />
             <div class="flex flex-col justify-end mt-4 sm:flex-row gap-2">

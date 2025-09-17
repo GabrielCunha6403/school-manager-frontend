@@ -21,14 +21,14 @@
                 <th></th>
             </tr>
         </ng-template>
-        <ng-template #body let-user>
+        <ng-template #body let-disciplina>
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.nome }}</td>
-                <td>{{ user.professor }}</td>
-                <td>{{ user.semestre }}</td>
+                <td>{{ disciplina.id }}</td>
+                <td>{{ disciplina.nome }}</td>
+                <td>{{ disciplina.professor }}</td>
+                <td>{{ disciplina.semestre }}</td>
                 <td style="text-align: right;">
-                    <p-button pTooltip="Visualizar" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Visualizar" [routerLink]="['./' + disciplina.id + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="viewModalConfirmDelete = true" />
                 </td>
@@ -48,3 +48,4 @@
         <p-button label="Confirmar" severity="danger" (click)="viewModalConfirmDelete = false" />
     </div>
 </p-dialog>
+<router-outlet></router-outlet>

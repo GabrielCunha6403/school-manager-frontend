@@ -26,7 +26,7 @@
                 <td>{{ curso.nome }}</td>
                 <td>{{ curso.cargaHoraria }}</td>
                 <td style="text-align: right;">
-                    <p-button pTooltip="Visualizar" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Visualizar" [routerLink]="['./' + curso.id + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Matriz curricular" [routerLink]="['./' + curso.id + '/matriz-curricular']" tooltipPosition="top" icon="pi pi-calendar" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Disciplinas" [routerLink]="['./' + curso.id + '/disciplinas']" tooltipPosition="top" icon="pi pi-book" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
@@ -45,3 +45,4 @@
         <p-button label="Confirmar" severity="danger" (click)="viewModalConfirmDelete = false" />
     </div>
 </p-dialog>
+<router-outlet></router-outlet>

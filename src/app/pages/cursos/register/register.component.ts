@@ -25,5 +25,16 @@ import { InputNumber } from 'primeng/inputnumber';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  // selectedTypeUser: any;
+  listCoordenadores = [
+    { name: 'João Silva', code: '1' },
+    { name: 'Maria Souza', code: '2' },
+    { name: 'Carlos Oliveira', code: '3' },
+    { name: 'Ana Pereira', code: '4' },
+    { name: 'Pedro Santos', code: '5' },
+    { name: 'Mariana Costa', code: '6' },
+    { name: 'Lucas Almeida', code: '7' },
+    { name: 'Beatriz Fernandes', code: '8' },
+    { name: 'Rafael Gomes', code: '9' },
+    { name: 'Juliana Ribeiro', code: '10' }
+  ];
 }

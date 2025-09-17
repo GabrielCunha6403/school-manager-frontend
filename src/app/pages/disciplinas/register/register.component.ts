@@ -3,6 +3,7 @@ import { PageHeaderComponent } from '../../../util/page-header/page-header.compo
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputMaskModule } from 'primeng/inputmask';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { RouterLink } from "@angular/router";
 import { FormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
@@ -20,6 +21,7 @@ import { InputNumber } from 'primeng/inputnumber';
     RouterLink,
     FormsModule,
     InputMaskModule,
+    MultiSelectModule,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

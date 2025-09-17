@@ -1,0 +1,38 @@
+<p-dialog 
+    [modal]="true" 
+    [visible]="true" 
+    [style]="{ width: '40rem' }" >
+    <ng-template #headless>
+        <div class="m-4">
+            <div class="modal-header">
+                <span>Detalhes da disciplina</span>
+            </div>
+            <div class="modal-body my-4">
+                <span>Nome da disciplina: <strong>Programação Orientada a Objetos</strong></span>
+                <span>Créditos: <strong>3600</strong> créditos</span>
+                <span>Semestre: <strong>5</strong></span>
+                <span>Professores da disciplina:</span>
+                <div class="overflow-y-auto" style="max-height: 16rem;">
+                    <p-table [value]="listProfessores">
+                        <ng-template #header>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-product>
+                            <tr>
+                                <td>{{ product.cdProfessor }}</td>
+                                <td>{{ product.nmProfessor }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2">
+                <p-button label="Fechar" severity="primary" [routerLink]="['../../']" />
+            </div>
+        </div>
+    </ng-template>
+
+</p-dialog>
