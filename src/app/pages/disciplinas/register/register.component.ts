@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { PageHeaderComponent } from '../../../util/page-header/page-header.component';
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { RouterLink } from "@angular/router";
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
+import { Disciplina } from '../../../models/disciplina';
 
 @Component({
   selector: 'app-register',
@@ -22,11 +23,14 @@ import { InputNumber } from 'primeng/inputnumber';
     FormsModule,
     InputMaskModule,
     MultiSelectModule,
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
+  private disciplina = inject(Disciplina);
+  disciplinaForm = this.disciplina.getDisciplinaForm();
   listProfessores = [
     { name: 'Carlos Souza' },
     { name: 'Mariana Oliveira' },
@@ -36,4 +40,8 @@ export class RegisterComponent {
     { name: 'Patrícia Almeida' },
     { name: 'Gustavo Ferreira' },
   ]
+  
+  ngOnDestroy(): void {
+    this.disciplina.disciplinaForm.reset();
+  }
 }

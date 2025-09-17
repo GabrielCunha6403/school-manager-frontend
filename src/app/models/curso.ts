@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Injectable({
-  providedIn: 'root' // torna disponível globalmente
+  providedIn: 'root'
 })
 export class Curso {
     private fb = inject(FormBuilder);

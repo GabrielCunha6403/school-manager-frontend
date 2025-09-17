@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { PageHeaderComponent } from '../../../util/page-header/page-header.component';
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
@@ -26,7 +26,7 @@ import { Curso } from '../../../models/curso';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   private curso = inject(Curso);
   cursoForm: FormGroup = this.curso.getCursoForm();
   
@@ -42,5 +42,9 @@ export class RegisterComponent {
     { name: 'Rafael Gomes', code: '9' },
     { name: 'Juliana Ribeiro', code: '10' }
   ];
+  
+  ngOnDestroy(): void {
+    this.curso.cursoForm.reset();
+  }
   
 }
