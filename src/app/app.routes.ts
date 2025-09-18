@@ -16,6 +16,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/users/register/register.component').then(m => m.RegisterComponent)
     },
     {
+        path: 'users/:cdUser/edit',
+        loadComponent: () => import('./pages/users/register/register.component').then(m => m.RegisterComponent)
+    },
+    {
         path: 'cursos',
         loadComponent: () => import('./pages/cursos/cursos.component').then(m => m.CursosComponent),
         children: [

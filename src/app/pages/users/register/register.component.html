@@ -1,7 +1,7 @@
 <div class="content-body sm:w-[80vw]">
-    <app-page-header title="Cadastro de Usuário"></app-page-header>
+    <app-page-header [title]="(isEdit ? 'Edição' : 'Cadastro') + ' de Usuário'"></app-page-header>
     <div class="w-full max-w-md mx-auto mt-16 grid">
-        <form [formGroup]="userForm" (submit)="postUser()">
+        <form [formGroup]="userForm" (submit)="saveUser()">
             <span>Nome</span>
             <input type="text" pInputText formControlName="nmUser" class="w-full mb-4" placeholder="Digite o nome do usuário">
             <span>Tipo de usuário</span>

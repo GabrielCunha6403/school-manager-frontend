@@ -8,6 +8,7 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 import { Tooltip } from 'primeng/tooltip';
 import { UsersService } from '../users.service';
 import { User } from './types/types';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-users',
@@ -32,17 +33,32 @@ export class UsersComponent implements OnInit {
   private service = inject(UsersService);
   public listUsers: User[] = [];
   public viewModalConfirmDelete = false;
+  public userToBeDeleted: User | null = null; 
+  private message = inject(MessageService);
 
-  ngOnInit(): void {
-    this.loadUsers();
+  async ngOnInit(): Promise<void> {
+    await this.loadUsers();
   }
 
-  loadUsers() {
-    this.service.listUsers().subscribe((users) => {
+  async loadUsers() {
+    await this.service.listUsers().subscribe((users) => {
       this.listUsers = users as User[];
     });
   }
-      
+  
+  confirmDeletion(user: User) {
+    this.userToBeDeleted = user;
+    this.viewModalConfirmDelete = true;
+  }
+
+  async deleteUser() {
+    await this.service.deleteUser(this.userToBeDeleted?.cdUser!).subscribe(res => {
+      this.viewModalConfirmDelete = false;
+      this.message.add({ severity: 'success', summary: `Usuário ${this.userToBeDeleted?.nmUser} deletado com sucesso!` });
+      this.userToBeDeleted = null;
+      this.loadUsers();
+    });
+  }
 
   applyFilter(event: Event) {
     const input = event.target as HTMLInputElement;

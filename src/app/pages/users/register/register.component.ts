@@ -3,12 +3,13 @@ import { PageHeaderComponent } from '../../../util/page-header/page-header.compo
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputMaskModule } from 'primeng/inputmask';
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
-import { User } from '../../../models/user';
+import { User as UserModel } from '../../../models/user';
 import { UsersService } from '../../users.service';
 import { MessageService } from 'primeng/api';
+import { TpUser, User } from '../types/types';
 
 @Component({
   selector: 'app-register',
@@ -28,35 +29,52 @@ import { MessageService } from 'primeng/api';
 })
 export class RegisterComponent implements OnDestroy, OnInit {
 
-  private user = inject(User);
+  private userModel = inject(UserModel);
   private service = inject(UsersService);
+  private route = inject(ActivatedRoute);
   private router = inject(Router);
   private message = inject(MessageService);
-  public userForm = this.user.getUserForm();
-  public selectedTypeUser: any;
+  public isEdit = this.route.snapshot.paramMap.get('cdUser') != null;
+  public cdUser = this.route.snapshot.paramMap.get('cdUser');
+  public userForm = this.userModel.getUserForm();
+  public selectedTypeUser: TpUser = new TpUser();
 
-  public listTypeUser: any = [];
+  public listTypeUser: TpUser[] = [];
   
   async ngOnInit(): Promise<void> {
     await this.listTpUsers();
+    if(this.isEdit) await this.loadUser(parseInt(this.cdUser!));
   }
   
   ngOnDestroy(): void {
-    this.user.userForm.reset();
+    this.userModel.userForm.reset();
+  }
+  
+  async loadUser(cdUser: number) {
+    await this.service.getUser(cdUser).subscribe(res => {
+      this.userModel.setValuesFromUser(res as User);
+    });
   }
 
   async listTpUsers() {
     await this.service.listTpUsers().subscribe((res) => {
-      this.listTypeUser = res;
+      this.listTypeUser = res as TpUser[];
     })
   }
 
-  postUser() {
+  async saveUser() {
     const userReq = this.userForm.value;
-    this.service.postUser(userReq).subscribe((res: any) => {
-      this.message.add({ severity: 'success', summary: `Usuário ${res.nmUser} cadastrado com sucesso!` })
-      this.router.navigate(['/users']);
-    })
+    if(this.isEdit) {
+      await this.service.editUser(userReq).subscribe((res: any) => {
+        this.message.add({ severity: 'success', summary: `Usuário ${res.nmUser} alterado com sucesso!` })
+        this.router.navigate(['/users']);
+      });
+    } else {
+      await this.service.postUser(userReq).subscribe((res: any) => {
+        this.message.add({ severity: 'success', summary: `Usuário ${res.nmUser} cadastrado com sucesso!` })
+        this.router.navigate(['/users']);
+      });
+    }
   }
 
 }

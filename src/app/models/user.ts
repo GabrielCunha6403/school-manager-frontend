@@ -1,4 +1,5 @@
 import { inject, Injectable } from "@angular/core";
+import { User as UserType } from "../pages/users/types/types";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Injectable({
@@ -20,6 +21,15 @@ export class User {
 
     getUserForm(): FormGroup {
         return this.userForm;
+    }
+
+    setValuesFromUser(user: UserType) {
+        this.userForm.patchValue({
+            cdUser: user.cdUser,
+            nmUser: user.nmUser,
+            tpUser: user.tpUser,
+            cpf: user.cpf
+        });
     }
 
 }

@@ -25,4 +25,12 @@ export class UsersService {
   listTpUsers() {
     return this.http.get(`${environment.apiUrl}/users/listTpUsers`);
   }
+
+  editUser(user: User) {
+    return this.http.put(`${environment.apiUrl}/users`, user);
+  }
+
+  deleteUser(cdUser: number) {
+    return this.http.delete(`${environment.apiUrl}/users?cdUser=${cdUser}`);
+  }
 }
