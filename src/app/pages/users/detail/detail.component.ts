@@ -1,8 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from "primeng/button";
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TableModule } from 'primeng/table';
+import { UsersService } from '../../users.service';
+import { User } from '../types/types';
 
 @Component({
   selector: 'app-detail',
@@ -16,17 +18,24 @@ import { TableModule } from 'primeng/table';
   templateUrl: './detail.component.html',
   styleUrl: './detail.component.scss'
 })
-export class DetailComponent {
-  router = inject(Router);
+export class DetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private service = inject(UsersService);
+  public cdUser: string = this.route.snapshot.paramMap.get('cdUser') ?? '';
+  public user: User = new User();
 
-  listProfessores = [
-    { cdProfessor: 1, nmProfessor: 'João Silva', dsFormacao: 'Mestre em Matemática', dsEspecialidade: 'Álgebra' },
-    { cdProfessor: 2, nmProfessor: 'Maria Oliveira', dsFormacao: 'Doutora em Física', dsEspecialidade: 'Mecânica' },
-  ];
+  async ngOnInit(): Promise<void> {
+    await this.loadUser(parseInt(this.cdUser));
+  }
+
+  async loadUser(cdUser: number) {
+    await this.service.getUser(cdUser).subscribe(res => {
+      this.user = res as User;
+    });
+  }
 
   fecharDialog() {
-    console.log("assererre");
-    
-    this.router.navigate(['../../']); // mesmo comportamento do onHide
+    this.router.navigate(['../../']);
   }
 }

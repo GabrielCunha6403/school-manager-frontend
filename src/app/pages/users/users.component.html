@@ -23,12 +23,12 @@
         </ng-template>
         <ng-template #body let-user>
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.tpUser }}</td>
+                <td>{{ user.cdUser }}</td>
+                <td>{{ user.nmUser }}</td>
+                <td>{{ user.tpUser.dsTpUser }}</td>
                 <td>{{ user.cpf }}</td>
                 <td style="text-align: right;">
-                    <p-button pTooltip="Visualizar" [routerLink]="['./' + user.id + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Visualizar" [routerLink]="['./' + user.cdUser + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
                     <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="viewModalConfirmDelete = true" />
                 </td>

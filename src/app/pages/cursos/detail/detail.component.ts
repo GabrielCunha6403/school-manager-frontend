@@ -25,8 +25,6 @@ export class DetailComponent {
   ];
 
   fecharDialog() {
-    console.log("assererre");
-    
-    this.router.navigate(['../../']); // mesmo comportamento do onHide
+    this.router.navigate(['../../']);
   }
 }
