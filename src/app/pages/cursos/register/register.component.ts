@@ -1,13 +1,17 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { PageHeaderComponent } from '../../../util/page-header/page-header.component';
 import { Button } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { InputMaskModule } from 'primeng/inputmask';
-import { RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
 import { Curso } from '../../../models/curso';
+import { Curso as CursoType } from '../types/types';
+import { CursosService } from '../cursos.service';
+import { User } from '../../users/types/types';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -26,22 +30,54 @@ import { Curso } from '../../../models/curso';
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnDestroy {
+export class RegisterComponent implements OnDestroy, OnInit {
   private curso = inject(Curso);
-  cursoForm: FormGroup = this.curso.getCursoForm();
-  
-  listCoordenadores = [
-    { name: 'João Silva', code: '1' },
-    { name: 'Maria Souza', code: '2' },
-    { name: 'Carlos Oliveira', code: '3' },
-    { name: 'Ana Pereira', code: '4' },
-    { name: 'Pedro Santos', code: '5' },
-    { name: 'Mariana Costa', code: '6' },
-    { name: 'Lucas Almeida', code: '7' },
-    { name: 'Beatriz Fernandes', code: '8' },
-    { name: 'Rafael Gomes', code: '9' },
-    { name: 'Juliana Ribeiro', code: '10' }
-  ];
+  private service = inject(CursosService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private message = inject(MessageService);
+
+  public cdCurso = this.route.snapshot.paramMap.get("cdCurso");
+  public isEdit = this.cdCurso != null;
+  public cursoForm: FormGroup = this.curso.getCursoForm();
+  public listCoordenadores: User[] = [];
+  public selectedCoordenador: User | null = null; 
+
+  ngOnInit(): void {
+    this.listarCoordenadores();
+      if(this.isEdit) {
+        this.loadCurso();
+      }
+  }
+
+  listarCoordenadores() {
+    this.service.listCoordenadores().subscribe(res => {
+      this.listCoordenadores = res as User[];
+    })
+  }
+
+  loadCurso() {
+    this.service.getCurso(parseInt(this.cdCurso!)).subscribe(res => {
+      const cursoData = res as CursoType;
+      cursoData.coordenador = this.listCoordenadores.find(c => c.cdUser == cursoData.coordenador?.cdUser)!;
+      this.curso.setValuesFromCurso(cursoData);
+    });
+  }
+
+  saveCurso() {
+    const curso = this.cursoForm.value;
+    if(this.isEdit) {
+      this.service.editCurso(curso).subscribe((res: any) => {
+        this.message.add({ severity: 'success', summary: `Curso ${res.nmCurso} atualizado com sucesso!` });
+        this.router.navigate([`/cursos`]);
+      })
+    } else {
+      this.service.postCurso(curso).subscribe((res: any) => {
+        this.message.add({ severity: 'success', summary: `Curso ${res.nmCurso} cadastrado com sucesso!` });
+        this.router.navigate([`/cursos`]);
+      })
+    }
+  }
   
   ngOnDestroy(): void {
     this.curso.cursoForm.reset();

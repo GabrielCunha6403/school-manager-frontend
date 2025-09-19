@@ -1,7 +1,10 @@
+import { Disciplina } from "../../disciplinas/types/types";
+
 export class User {
     cdUser: number | null = null;
     nmUser: string = '';
     tpUser: TpUser = new TpUser();
+    disciplinas: Disciplina[] = []; 
     cpf: string = '';
 }
 

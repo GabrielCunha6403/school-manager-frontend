@@ -1,5 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Curso as CursoType } from "../pages/cursos/types/types";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,19 @@ export class Curso {
         return this.fb.group({
             cdCurso: [null],
             nmCurso: [null, [Validators.required]],
-            nmCoordenador: [null, [Validators.required]],
-            cargaHoraria: [null, [Validators.required]],
+            coordenador: [null, [Validators.required]],
+            nrCargaHoraria: [null, [Validators.required]],
         });
     }
+    
+        setValuesFromCurso(curso: CursoType) {
+            this.cursoForm.patchValue({
+                cdCurso: curso.cdCurso,
+                nmCurso: curso.nmCurso,
+                coordenador: curso.coordenador,
+                nrCargaHoraria: curso.nrCargaHoraria
+            });
+        }
 
     getCursoForm(): FormGroup {
         return this.cursoForm;

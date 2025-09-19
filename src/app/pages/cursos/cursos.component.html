@@ -10,7 +10,7 @@
         [paginator]="true"
         [styleClass]="'p-datatable-sm'"
         [rows]="5"
-        [globalFilterFields]="['id', 'nome']"
+        [globalFilterFields]="['cdCurso', 'nmCurso']"
         >
         <ng-template #header>
             <tr>
@@ -22,15 +22,15 @@
         </ng-template>
         <ng-template #body let-curso>
             <tr>
-                <td>{{ curso.id }}</td>
-                <td>{{ curso.nome }}</td>
-                <td>{{ curso.cargaHoraria }}</td>
+                <td>{{ curso.cdCurso }}</td>
+                <td>{{ curso.nmCurso }}</td>
+                <td>{{ curso.nrCargaHoraria }}h</td>
                 <td style="text-align: right;">
-                    <p-button pTooltip="Visualizar" [routerLink]="['./' + curso.id + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
-                    <p-button pTooltip="Matriz curricular" [routerLink]="['./' + curso.id + '/matriz-curricular']" tooltipPosition="top" icon="pi pi-calendar" [rounded]="true" [text]="true" />
-                    <p-button pTooltip="Disciplinas" [routerLink]="['./' + curso.id + '/disciplinas']" tooltipPosition="top" icon="pi pi-book" [rounded]="true" [text]="true" />
-                    <p-button pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
-                    <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="viewModalConfirmDelete = true" />
+                    <p-button pTooltip="Visualizar" [routerLink]="['./' + curso.cdCurso + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Matriz curricular" [routerLink]="['./' + curso.cdCurso + '/matriz-curricular']" tooltipPosition="top" icon="pi pi-calendar" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Disciplinas" [routerLink]="['./' + curso.cdCurso + '/disciplinas']" tooltipPosition="top" icon="pi pi-book" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Editar" [routerLink]="['./' + curso.cdCurso + '/edit']" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="confirmCursoDeletion(curso)" />
                 </td>
             </tr>
         </ng-template>
@@ -38,11 +38,11 @@
 </div>
 <p-dialog header="Confirmar exclusão de usuário" [modal]="true" [(visible)]="viewModalConfirmDelete" [style]="{ width: '25rem' }">
     <div class="pb-5">
-        <span>O curso FULANO DE TAL será excluído do sistema. Você confirma esta exclusão?</span>
+        <span>O curso {{ cursoToBeDeleted?.nmCurso }} será excluído do sistema e essa ação excluirá todas as disciplinas vinculadas à este curso. Você confirma esta exclusão?</span>
     </div>
     <div class="flex justify-end gap-2">
         <p-button label="Cancelar" severity="secondary" (click)="viewModalConfirmDelete = false" />
-        <p-button label="Confirmar" severity="danger" (click)="viewModalConfirmDelete = false" />
+        <p-button label="Confirmar" severity="danger" (click)="deleteCurso()" />
     </div>
 </p-dialog>
 <router-outlet></router-outlet>

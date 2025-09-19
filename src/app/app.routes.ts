@@ -34,6 +34,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/cursos/register/register.component').then(m => m.RegisterComponent),
     },
     {
+        path: 'cursos/:cdCurso/edit',
+        loadComponent: () => import('./pages/cursos/register/register.component').then(m => m.RegisterComponent),
+    },
+    {
         path: 'cursos/:cdCurso/disciplinas',
         loadComponent: () => import('./pages/disciplinas/disciplinas.component').then(m => m.DisciplinasComponent),
         children: [

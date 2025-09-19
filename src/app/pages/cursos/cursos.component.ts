@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Table, TableModule } from 'primeng/table';
@@ -6,6 +6,9 @@ import { DialogModule } from 'primeng/dialog';
 import { Tooltip } from 'primeng/tooltip';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
 import { RouterLink, ActivatedRoute, RouterOutlet } from "@angular/router";
+import { CursosService } from './cursos.service';
+import { Curso } from './types/types';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-cursos',
@@ -23,25 +26,42 @@ import { RouterLink, ActivatedRoute, RouterOutlet } from "@angular/router";
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.scss'
 })
-export class CursosComponent {
+export class CursosComponent implements OnInit {
   @ViewChild('cursoTable') cursoTable!: Table;
-  viewModalConfirmDelete = false;
+  
+  private service = inject(CursosService);
+  private message = inject(MessageService);
 
-  cursos = [
-    { id: 1, nome: "Engenharia de Software", cargaHoraria: 3600 },
-    { id: 2, nome: "Ciência da Computação", cargaHoraria: 4000 },
-    { id: 3, nome: "Sistemas de Informação", cargaHoraria: 3200 },
-    { id: 4, nome: "Engenharia Elétrica", cargaHoraria: 4200 },
-    { id: 5, nome: "Administração", cargaHoraria: 3000 },
-    { id: 6, nome: "Direito", cargaHoraria: 4500 },
-    { id: 7, nome: "Medicina", cargaHoraria: 7200 },
-    { id: 8, nome: "Enfermagem", cargaHoraria: 3800 },
-    { id: 9, nome: "Arquitetura e Urbanismo", cargaHoraria: 3600 },
-    { id: 10, nome: "Psicologia", cargaHoraria: 4000 },
-  ];
+  public viewModalConfirmDelete = false;
+  public cursoToBeDeleted: Curso | null = null;
+  public cursos = [];
+
+  ngOnInit(): void {
+    this.listarCursos();
+  }
+
+  listarCursos() {
+    this.service.listCursos().subscribe((res: any) => {
+      this.cursos = res;
+    });
+  }
   
   applyFilter(event: Event) {
     const input = event.target as HTMLInputElement;
     this.cursoTable.filterGlobal(input.value, 'contains');
+  }
+
+  confirmCursoDeletion(curso: Curso) {
+    this.cursoToBeDeleted = curso;
+    this.viewModalConfirmDelete = true;
+  }
+
+  deleteCurso() {
+    this.service.deleteCurso(this.cursoToBeDeleted?.cdCurso!).subscribe(res => {
+      this.message.add({ severity: 'success', summary: `Curso ${this.cursoToBeDeleted?.nmCurso} deletado com sucesso!` });
+      this.cursoToBeDeleted = null;
+      this.viewModalConfirmDelete = false;
+      this.listarCursos();
+    });
   }
 }
