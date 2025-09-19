@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Button } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Table, TableModule } from 'primeng/table';
@@ -6,6 +6,9 @@ import { DialogModule } from 'primeng/dialog';
 import { Tooltip } from 'primeng/tooltip';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
 import { ActivatedRoute, RouterLink, RouterOutlet } from "@angular/router";
+import { Disciplina } from './types/types';
+import { DisciplinasService } from './disciplinas.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-disciplinas',
@@ -23,12 +26,17 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from "@angular/router";
   templateUrl: './disciplinas.component.html',
   styleUrl: './disciplinas.component.scss'
 })
-export class DisciplinasComponent {
+export class DisciplinasComponent implements OnInit {
   @ViewChild('disciplinaTable') disciplinaTable!: Table;
-  cdCurso: string | null = null;
-  viewModalConfirmDelete = false;
+  private service = inject(DisciplinasService);
+  private message = inject(MessageService);
+  private route = inject(ActivatedRoute);
+
+  public cdCurso = this.route.snapshot.paramMap.get('cdCurso');
+  public viewModalConfirmDelete = false;
+  public disciplinaToBeDeleted: Disciplina | null = null;
   
-  disciplinasComputacao = [
+  listDisciplinas = [
     { id: 1, nome: "Algoritmos e Estruturas de Dados", professor: "Carlos Souza", semestre: 1 },
     { id: 2, nome: "Programação Orientada a Objetos", professor: "Mariana Oliveira", semestre: 2 },
     { id: 3, nome: "Banco de Dados", professor: "Ricardo Mendes", semestre: 3 },
@@ -40,13 +48,33 @@ export class DisciplinasComponent {
     { id: 9, nome: "Segurança da Informação", professor: "André Santos", semestre: 7 },
     { id: 10, nome: "Compiladores", professor: "Roberta Nunes", semestre: 8 }
   ];
-  
-  constructor(private route: ActivatedRoute) {
-    this.cdCurso = this.route.snapshot.paramMap.get('cdCurso');
+
+  ngOnInit(): void {
+    this.listarDisciplinas();
+  }
+
+  listarDisciplinas() {
+    this.service.listDisciplinas(parseInt(this.cdCurso!)).subscribe((res: any) => {
+      this.listDisciplinas = res;
+    })
   }
   
   applyFilter(event: Event) {
     const input = event.target as HTMLInputElement;
     this.disciplinaTable.filterGlobal(input.value, 'contains');
+  }
+
+  confirmDeletion(disciplina: Disciplina) {
+    this.disciplinaToBeDeleted = disciplina;
+    this.viewModalConfirmDelete = true;
+  }
+
+  deleteDisciplina() {
+    this.service.deleteDisciplina(this.disciplinaToBeDeleted?.cdDisciplina!).subscribe(res => {
+      this.message.add({ severity: 'success', summary: `Disciplina ${this.disciplinaToBeDeleted?.nmDisciplina} deletada com sucesso!` });
+      this.disciplinaToBeDeleted = null;
+      this.viewModalConfirmDelete = false;
+      this.listarDisciplinas();
+    });
   }
 }

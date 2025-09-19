@@ -6,9 +6,9 @@ import { DialogModule } from 'primeng/dialog';
 import { PageHeaderComponent } from '../../util/page-header/page-header.component';
 import { RouterLink, RouterOutlet } from "@angular/router";
 import { Tooltip } from 'primeng/tooltip';
-import { UsersService } from '../users.service';
 import { User } from './types/types';
 import { MessageService } from 'primeng/api';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',

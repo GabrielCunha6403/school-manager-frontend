@@ -1,19 +1,33 @@
 <div class="content-body sm:w-[80vw]">
-    <app-page-header title="Cadastro de Disciplina"></app-page-header>
-    <div class="w-full max-w-md mx-auto mt-16 grid">
-        <form [formGroup]="disciplinaForm">
-            <span>Nome</span>
-            <input type="text" pInputText formControlName="nmDisciplina" class="w-full mb-4" placeholder="Digite o nome da disciplina">
-            <span>Professor</span>
-            <p-multiselect [options]="listProfessores" display="chip" optionLabel="name" placeholder="Selecione os professores" styleClass="w-full mb-4" />
-            <span>Semestre</span>
-            <p-inputnumber inputId="integeronly" formControlName="semestre" class="w-full mb-4" placeholder="Ex.: 4" />
-            <span>Créditos</span>
-            <p-inputnumber inputId="integeronly" formControlName="nrCreditos" class="w-full mb-4" placeholder="Ex.: 8" />
-            <div class="flex flex-col justify-end mt-4 sm:flex-row gap-2">
-                <p-button label="Cancelar" class="w-full flex sm:w-auto" [routerLink]="['../']" severity="secondary"></p-button>
-                <p-button label="Salvar" [disabled]="disciplinaForm.invalid" class="w-full flex sm:w-auto" [routerLink]="['../']"></p-button>
-            </div>
-        </form>
-    </div>
+  <app-page-header title="Cadastro de Disciplina"></app-page-header>
+  <div class="w-full max-w-md mx-auto mt-16 grid">
+    <form [formGroup]="disciplinaForm">
+      <span>Nome</span>
+      <input type="text" pInputText formControlName="nmDisciplina" class="w-full mb-4" placeholder="Digite o nome da disciplina">
+      
+      <span>Professor</span>
+      <p-multiselect
+          [options]="listProfessores"
+          [ngModel]="selectedProfessores"
+          [ngModelOptions]="{standalone: true}"
+          (onChange)="onProfessoresChange($event.value)"
+          display="chip"
+          optionLabel="nmUser"
+          selectedItemsLabel="nmUser"
+          placeholder="Selecione os professores"
+          styleClass="w-full mb-4">
+      </p-multiselect>
+
+      <span>Semestre</span>
+      <p-inputnumber inputId="integeronly" formControlName="semestre" class="w-full mb-4" placeholder="Ex.: 4" />
+
+      <span>Créditos</span>
+      <p-inputnumber inputId="integeronly" formControlName="nrCreditos" class="w-full mb-4" placeholder="Ex.: 8" />
+
+      <div class="flex flex-col justify-end mt-4 sm:flex-row gap-2">
+        <p-button label="Cancelar" class="w-full flex sm:w-auto" [routerLink]="['../../']" severity="secondary"></p-button>
+        <p-button label="Salvar" (click)="saveDisciplina()" [disabled]="disciplinaForm.invalid" class="w-full flex sm:w-auto" [routerLink]="['../']"></p-button>
+      </div>
+    </form>
+  </div>
 </div>

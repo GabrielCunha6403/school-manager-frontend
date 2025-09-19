@@ -3,7 +3,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from "primeng/button";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TableModule } from 'primeng/table';
-import { UsersService } from '../../users.service';
+import { UsersService } from '../users.service';
 import { User } from '../types/types';
 
 @Component({

@@ -6,31 +6,31 @@
     </div>
     <p-table 
         #disciplinaTable
-        [value]="disciplinasComputacao" 
+        [value]="listDisciplinas" 
         [paginator]="true"
         [styleClass]="'p-datatable-sm'"
         [rows]="5"
-        [globalFilterFields]="['id', 'nome', 'professor']"
+        [globalFilterFields]="['cdDisciplina', 'nmDisciplina']"
         >
         <ng-template #header>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>Professor</th>
+                <th>Qtd. Professores</th>
                 <th>Semestre</th>
                 <th></th>
             </tr>
         </ng-template>
         <ng-template #body let-disciplina>
             <tr>
-                <td>{{ disciplina.id }}</td>
-                <td>{{ disciplina.nome }}</td>
-                <td>{{ disciplina.professor }}</td>
+                <td>{{ disciplina.cdDisciplina }}</td>
+                <td>{{ disciplina.nmDisciplina }}</td>
+                <td>{{ disciplina.professores?.length }}</td>
                 <td>{{ disciplina.semestre }}</td>
                 <td style="text-align: right;">
-                    <p-button pTooltip="Visualizar" [routerLink]="['./' + disciplina.id + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
-                    <p-button pTooltip="Editar" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
-                    <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="viewModalConfirmDelete = true" />
+                    <p-button pTooltip="Visualizar" [routerLink]="['./' + disciplina.cdDisciplina + '/detail']" tooltipPosition="top" icon="pi pi-eye" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Editar" [routerLink]="['./' + disciplina.cdDisciplina + '/edit']" tooltipPosition="top" icon="pi pi-pencil" [rounded]="true" [text]="true" />
+                    <p-button pTooltip="Excluir" tooltipPosition="top" icon="pi pi-trash" [rounded]="true" [text]="true" (click)="confirmDeletion(disciplina)" />
                 </td>
             </tr>
         </ng-template>
@@ -41,11 +41,11 @@
 </div>
 <p-dialog header="Confirmar exclusão de usuário" [modal]="true" [(visible)]="viewModalConfirmDelete" [style]="{ width: '25rem' }">
     <div class="pb-5">
-        <span>O curso FULANO DE TAL será excluído do sistema. Você confirma esta exclusão?</span>
+        <span>A disciplina {{ disciplinaToBeDeleted?.nmDisciplina }} será excluída do sistema. Você confirma esta exclusão?</span>
     </div>
     <div class="flex justify-end gap-2">
         <p-button label="Cancelar" severity="secondary" (click)="viewModalConfirmDelete = false" />
-        <p-button label="Confirmar" severity="danger" (click)="viewModalConfirmDelete = false" />
+        <p-button label="Confirmar" severity="danger" (click)="deleteDisciplina()" />
     </div>
 </p-dialog>
 <router-outlet></router-outlet>

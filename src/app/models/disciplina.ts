@@ -1,5 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Disciplina as DisciplinaType } from "../pages/disciplinas/types/types";
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +24,12 @@ export class Disciplina {
         return this.disciplinaForm;
     }
 
+    setValuesFromDisciplina(disciplina: DisciplinaType) {
+        this.disciplinaForm.patchValue({
+            cdDisciplina: disciplina.cdDisciplina,
+            nmDisciplina: disciplina.nmDisciplina,
+            semestre: disciplina.semestre,
+            nrCreditos: disciplina.nrCreditos
+        });
+    }
 }

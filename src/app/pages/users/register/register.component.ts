@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { User as UserModel } from '../../../models/user';
-import { UsersService } from '../../users.service';
+import { UsersService } from '../users.service';
 import { MessageService } from 'primeng/api';
 import { TpUser, User } from '../types/types';
 
